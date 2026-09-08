@@ -1,15 +1,29 @@
-# Diagnostic facturation électronique
+# Diagnostic facturation électronique — v2
 
-Outil qui aide les auto-entrepreneurs à savoir en 3 questions s'ils sont concernés
-par la réforme de la facturation électronique 2026, leurs obligations et les risques.
+Outil qui aide les indépendants à savoir s'ils sont concernés par la réforme
+de la facturation électronique, avec des cas particuliers (international,
+clientèle mixte, changement de régime TVA), des exemples concrets, et une
+page sources avec date de dernière vérification.
 
 ## Structure
 
 - `index.html` — squelette HTML + formulaire caché pour la détection Netlify Forms
-- `src/main.js` — orchestration (état de l'app, navigation entre questions)
-- `src/questions.js` — données des questions + logique métier (calcul du verdict)
+- `src/main.js` — routage entre les vues (accueil, quiz, résultat, exemples, sources) et état de l'app
+- `src/questions.js` — questions + logique métier (calcul du verdict, sélection multiple des types de clients)
+- `src/examples.js` — six profils avec des cas concrets (international, mixte, changement de régime...)
+- `src/sources.js` — liste des sources officielles + date de dernière vérification du contenu
 - `src/render.js` — fonctions de rendu DOM, séparées de la logique
-- `src/style.css` — styles
+- `src/style.css` — direction visuelle premium (fond sombre, accent laiton)
+
+## Garder le contenu à jour
+
+Deux choses à revoir régulièrement :
+
+1. **`src/sources.js`** — mets à jour `lastVerified` à chaque fois que tu
+   revérifies les règles contre les sources officielles. Cette date s'affiche
+   sur le site (page Sources et bas de page du résultat).
+2. **`src/questions.js`** — si une règle ou une date change (ex: report de
+   l'échéance 2027), c'est le seul fichier à modifier pour la logique.
 
 ## Développement local
 
@@ -24,21 +38,5 @@ npm run dev
 npm run build
 ```
 
-Le résultat est dans `dist/`, à déployer tel quel sur Netlify (glisser-déposer
-le dossier `dist` sur app.netlify.com) pour que le formulaire email fonctionne.
-
-## Ouvrir sur StackBlitz
-
-Trois façons de faire, de la plus simple à la plus durable :
-
-1. **Zip → StackBlitz** : va sur https://stackblitz.com/edit/vite (template Vite vanilla),
-   supprime les fichiers par défaut, et recrée les fichiers de ce projet en copiant-collant
-   leur contenu un par un (5 fichiers, ça va vite).
-2. **Via GitHub** : crée un repo GitHub, pousse ce dossier dedans, puis ouvre
-   `https://stackblitz.com/github/TON-USER/TON-REPO` — StackBlitz importe tout
-   automatiquement et reste synchronisé avec le repo.
-3. **CLI StackBlitz** (si tu as Node en local) : `npx @stackblitz/sdk` ou simplement
-   glisse le dossier dans l'interface StackBlitz si l'option d'import local est proposée.
-
-La méthode GitHub (option 2) est recommandée si tu comptes continuer à faire évoluer
-le projet : ça te donne aussi un historique de versions gratuit.
+Le résultat est dans `dist/`, à déployer sur Netlify (glisser-déposer le
+dossier `dist`) pour que le formulaire email fonctionne.
